@@ -16,14 +16,14 @@ func listenWayland() error {
 	ticker := time.NewTicker(time.Millisecond * 500)
 	defer ticker.Stop()
 	for range ticker.C {
-		input, err := exec.Command("wl-paste", "-n").Output()
+		input, err := exec.Command("wl-paste", "-n", "--type", "text/plain").Output()
 		if err != nil {
-			return err
+			fmt.Printf("Nothing is copied\n")
 		}
 		toWrite = bytes.ReplaceAll(input, []byte("\n"), []byte(" "))
-		err = exec.Command("wl-copy", "-n", string(toWrite)).Run()
+		err = exec.Command("wl-copy", "-n", "--type", "text/plain", string(toWrite)).Run()
 		if err != nil {
-			return err
+			fmt.Printf("error exec wl-copy: %v\n", err)
 		}
 	}
 	return nil

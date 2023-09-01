@@ -1,4 +1,4 @@
-module copyhelper
+module go-pdf-copyhelper
 
 go 1.17
 

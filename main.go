@@ -42,6 +42,7 @@ func listen() error {
 	for input := range changed {
 		if bytes.Equal(input, toWrite) {
 			fmt.Printf("ToWrite string: %v\n", string(toWrite))
+			continue
 		} else {
 			fmt.Printf("Copied string: %v, %v\n", string(input), string(toWrite))
 		}
@@ -55,6 +56,7 @@ func listen() error {
 func main() {
 	fmt.Println("Start listening to clipboard...")
 	if os.Getenv("WAYLAND_DISPLAY") != "" {
+		fmt.Println("Wayland detected")
 		err := listenWayland()
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
